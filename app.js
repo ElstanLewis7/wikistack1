@@ -2,6 +2,7 @@ const morgan = require("morgan");
 const express = require("express");
 const layout = require("./views/layout");
 const { db } = require("./models");
+const routes = require('./routes/wiki')
 
 const app = express();
 
@@ -15,6 +16,9 @@ db.authenticate().then(() => {
 app.get("/", (req, res) => {
   res.send(layout("hi there"));
 });
+
+app.use('/wiki', routes);
+
 
 const start = async () => {
   await db.sync({ force: true });
